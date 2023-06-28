@@ -14,11 +14,11 @@ from typing import Tuple
     C: m x c matrix
     R: c x p matrix
 '''
-def matrix_multi_approx(A: np.ndarray, B: np.ndarray, c: int)-> Tuple[np.ndarray, np.ndarray]:
+def matrix_multi_approx(A: np.ndarray, B: np.ndarray, c: int, replace:bool=False)-> Tuple[np.ndarray, np.ndarray]:
     assert A.shape[1] == B.shape[0], "Shape not match"
     n = A.shape[1]
     probs = compute_ps(A, B)
-    its = np.random.choice(n, size=c, p=probs)
+    its = np.random.choice(n, size=c, p=probs, replace=replace)
     C = A[:, its]/np.sqrt(c*probs[its]).reshape(1, -1)
     R = B[its, :]/np.sqrt(c*probs[its]).reshape(-1, 1)
     return C, R
