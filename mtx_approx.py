@@ -1,4 +1,6 @@
 import numpy as np
+from typing import Tuple
+
 
 
 '''
@@ -12,7 +14,7 @@ import numpy as np
     C: m x c matrix
     R: c x p matrix
 '''
-def matrix_multi_approx(A: np.array, B: np.array, c: int):
+def matrix_multi_approx(A: np.ndarray, B: np.ndarray, c: int)-> Tuple[np.ndarray, np.ndarray]:
     assert A.shape[1] == B.shape[0], "Shape not match"
     n = A.shape[1]
     probs = compute_ps(A, B)
@@ -29,7 +31,7 @@ def matrix_multi_approx(A: np.array, B: np.array, c: int):
 @return:
     a list of probabilities that minimize E(||AB-CR||^2) (Frobenius norm)
 '''
-def compute_ps(A: np.array, B: np.array)-> np.array:
+def compute_ps(A: np.ndarray, B: np.ndarray)-> np.ndarray:
     assert A.shape[1] == B.shape[0], "Shape not match"
     C = np.sqrt(np.square(A).sum(axis=0) * np.square(B).sum(axis=1))
     return C/np.sum(C)
